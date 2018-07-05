@@ -1,0 +1,6 @@
+[submodule "TurboParser"]
+	path = TurboParser
+	url = https://github.com/Priberam/TurboParser.git
+[submodule "TurboTextAnalysis"]
+	path = TurboTextAnalysis
+	url = https://github.com/Priberam/TurboTextAnalysis.git
