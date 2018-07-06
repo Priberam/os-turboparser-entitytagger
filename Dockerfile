@@ -2,9 +2,10 @@ FROM ubuntu:16.04
 
 # Install nedeed tools for TurboParser and TurboTextAnalysis
 RUN apt-get update
-RUN apt-get install -y build-essential automake autoconf git unzip libconfig++8-dev libicu-dev python3 cython3 python3-flask
+RUN apt-get install -y wget build-essential automake autoconf git unzip libconfig++8-dev libicu-dev python3 cython3 python3-flask
 
 # Install TurboParser
+COPY TurboParser /TurboParser
 WORKDIR /TurboParser
 RUN sh install_deps.sh
 RUN rm missing
@@ -16,6 +17,7 @@ WORKDIR /TurboParser/libturboparser
 RUN make
 
 # Install TurboTextAnalysis
+COPY TurboTextAnalysis /TurboTextAnalysis
 WORKDIR /TurboTextAnalysis/TurboTextAnalysis
 RUN sed -ie 's/pba\/workspace/g' Makefile
 RUN make
