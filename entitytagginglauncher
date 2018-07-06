@@ -1,0 +1,2 @@
+python3 EntityDiscoveryLinkingPythonCli.py  -tp /TurboTextAnalysis/Data/  & 
+python3 EntityTaggingAPIWP4SUMMA.py -ts 10 -ne 60

@@ -27,16 +27,15 @@ RUN python3 setup.py install
 
 WORKDIR /
 RUN wget -r ftp://"ftp.priberam.pt|anonymous":@ftp.priberam.pt/SUMMAPublic/Models/EntityRecognition/v1
-RUN cp ftp.priberam.pt/SUMMAPublic/Models/EntityRecognition/v1/* TurboTextAnalysis/Data/
-
-WORKDIR /root
-ENV baseDir .
-COPY ${baseDir}/turbo_parser_server.py  /usr/bin
-COPY ${baseDir}/app.py  /usr/bin
-RUN chmod a+x /usr/bin/app.py
-
-EXPOSE 5000
+RUN mv ftp.priberam.pt/SUMMAPublic/Models/EntityRecognition/v1/* /TurboTextAnalysis/Data/
 
 # Load turboserver by default
-ENV LD_LIBRARY_PATH /TurboParser/libturboparser:/TurboTextAnalysis/TurboTextAnalysis:/TurboParser/deps/local/lib
-CMD app.py
+ENV LD_LIBRARY_PATH /TurboParser/deps/local/lib:/TurboParser/libturboparser:/TurboTextAnalysis/TurboTextAnalysis:TurboTextAnalysis/TurboTextAnalysisPython
+
+WORKDIR /root
+COPY *.py /usr/bin
+EXPOSE 5000
+EXPOSE 5001
+CMD entitytagginglauncher
+
+
