@@ -3,19 +3,19 @@
 from flask import Flask, jsonify, abort, make_response, request, render_template, flash, redirect
 from flask_cors import CORS, cross_origin
 #WEB SERVER: TORNADO
-#DEBUG# from tornado.wsgi import WSGIContainer
-#DEBUG# from tornado.httpserver import HTTPServer
-#DEBUG# from tornado.ioloop import IOLoop
-#DEBUG# #WEB SERVER: FALCON
-#DEBUG# #import falcon
-#DEBUG# #WEB SERVER: WAITRESS
-#DEBUG# #if os.name == 'nt':
-#DEBUG# #    from waitress import serve
-#DEBUG# #GEVENT
-#DEBUG# from gevent.pywsgi import WSGIServer
-#DEBUG# from gevent import monkey
-#DEBUG# # need to patch sockets to make requests async
-#DEBUG# monkey.patch_all()
+from tornado.wsgi import WSGIContainer
+from tornado.httpserver import HTTPServer
+from tornado.ioloop import IOLoop
+#WEB SERVER: FALCON
+#import falcon
+#WEB SERVER: WAITRESS
+#if os.name == 'nt':
+#    from waitress import serve
+#GEVENT
+from gevent.pywsgi import WSGIServer
+from gevent import monkey
+# need to patch sockets to make requests async
+monkey.patch_all()
 from wtforms import Form, TextField, TextAreaField, BooleanField, StringField, SubmitField, PasswordField, validators
 import requests
 import json
@@ -37,7 +37,7 @@ default_headers = {"Content-Type": "application/json",
 argparser = argparse.ArgumentParser()
 argparser.add_argument("-tp", "--turboparser_path", help="Path to turbo parser data/config folder")
 argparser.add_argument("-r" , "--route", help="Route for this webservice", default = "/edl_webservice/api")
-argparser.add_argument("-p" , "--port", help="Port to listen to future connections", default = 5002)
+argparser.add_argument("-p" , "--port", help="Port to listen to future connections", default = 5000)
 argparser.add_argument("-v" , "--verbose", help="Verbose Option")
 scriptargs = argparser.parse_args()
 
@@ -230,22 +230,22 @@ def ner_document__core(ner_model, language, doc_content):
 
 if __name__ == '__main__':
     app.wsgi_app = LoggingMiddleware(app.wsgi_app)    
-    app.run(debug=True,
-            host='0.0.0.0',
-            port=scriptargs.port,
-            threaded=True,
-            #threaded= (True if can_fork == False else False),processes =
-            #(cpu_count() if can_fork else 1),
-            use_reloader=False)
+    #app.run(debug=True,
+    #        host='0.0.0.0',
+    #        port=scriptargs.port,
+    #        threaded=True,
+    #        #threaded= (True if can_fork == False else False),processes =
+    #        #(cpu_count() if can_fork else 1),
+    #        use_reloader=False)
 
     ###TORNADO
     ##http_server = HTTPServer(WSGIContainer(app))
     ##http_server.listen(scriptargs.port)
     ##IOLoop.current().start()
 
-    #DEBUG# #GEVENT
-    #DEBUG# print("Start gevent WSGI server")
-    #DEBUG# # use gevent WSGI server instead of the Flask
-    #DEBUG# http = WSGIServer(('', scriptargs.port), app.wsgi_app)
-    #DEBUG# # TODO gracefully handle shutdown
-    #DEBUG# http.serve_forever()
+    #GEVENT
+    print("Start gevent WSGI server")
+    # use gevent WSGI server instead of the Flask
+    http = WSGIServer(('', scriptargs.port), app.wsgi_app)
+    # TODO gracefully handle shutdown
+    http.serve_forever()

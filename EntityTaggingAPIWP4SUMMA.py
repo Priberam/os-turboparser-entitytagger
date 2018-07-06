@@ -3,19 +3,19 @@
 from flask import Flask, jsonify, abort, make_response, request, render_template, flash, redirect
 from flask_cors import CORS, cross_origin
 #WEB SERVER: TORNADO
-#DEBUG# from tornado.wsgi import WSGIContainer
-#DEBUG# from tornado.httpserver import HTTPServer
-#DEBUG# from tornado.ioloop import IOLoop
-#DEBUG# #WEB SERVER: FALCON
-#DEBUG# #import falcon
-#DEBUG# #WEB SERVER: WAITRESS
-#DEBUG# #if os.name == 'nt':
-#DEBUG# #    from waitress import serve
-#DEBUG# # #GEVENT
-#DEBUG# from gevent.pywsgi import WSGIServer
-#DEBUG# from gevent import monkey
-#DEBUG# # need to patch sockets to make requests async
-#DEBUG# monkey.patch_all()
+from tornado.wsgi import WSGIContainer
+from tornado.httpserver import HTTPServer
+from tornado.ioloop import IOLoop
+#WEB SERVER: FALCON
+#import falcon
+#WEB SERVER: WAITRESS
+#if os.name == 'nt':
+#    from waitress import serve
+# #GEVENT
+from gevent.pywsgi import WSGIServer
+from gevent import monkey
+# need to patch sockets to make requests async
+monkey.patch_all()
 from wtforms import Form, TextField, TextAreaField, BooleanField, StringField, SubmitField, PasswordField, validators
 import requests
 import json
@@ -42,7 +42,7 @@ argparser.add_argument("-ts", "--el_ts", help="Seconds between EL api layer serv
 argparser.add_argument("-ne", "--el_ns", help="Number of EL api layer service first call retries", type=int, default = 10)
 argparser.add_argument("-u", "--url", help="URL of the other ETL layer", default = "http://localhost:5002/edl_webservice/api/v2.0/")
 argparser.add_argument("-r", "--route", help="Route for this webservice", default = "/EntityTagging/api")
-argparser.add_argument("-p", "--port", help="Port to listen to future connections", default = 5003)
+argparser.add_argument("-p", "--port", help="Port to listen to future connections", default = 5001)
 argparser.add_argument("-v", "--verbose", help="Verbose Option")
 scriptargs = argparser.parse_args()
 
@@ -598,23 +598,23 @@ def processRelatedDocumentsBackwardsCompatible():
 
 if __name__ == '__main__':
     app.wsgi_app = LoggingMiddleware(app.wsgi_app)
-    app.run(debug=True,
-            host='0.0.0.0',
-            port=scriptargs.port,
-            threaded=True,
-            #threaded= (True if can_fork == False else False),processes =
-            #(cpu_count() if can_fork else 1),
-            use_reloader=False)
+    #app.run(debug=True,
+    #        host='0.0.0.0',
+    #        port=scriptargs.port,
+    #        threaded=True,
+    #        #threaded= (True if can_fork == False else False),processes =
+    #        #(cpu_count() if can_fork else 1),
+    #        use_reloader=False)
 
     ###TORNADO
     ##http_server = HTTPServer(WSGIContainer(app))
     ##http_server.listen(scriptargs.port)
     ##IOLoop.current().start()
 
-    #DEBUG# #GEVENT
-    #DEBUG# used_threads=cpu_count() if cpu_count()<=4 else int(cpu_count()/2)
-    #DEBUG# print("Start gevent WSGI server with "+ str(used_threads)+ " threads")
-    #DEBUG# # use gevent WSGI server instead of the Flask
-    #DEBUG# http = WSGIServer(('', scriptargs.port), app.wsgi_app, spawn=used_threads)
-    #DEBUG# # TODO gracefully handle shutdown
-    #DEBUG# http.serve_forever()
+    #GEVENT
+    used_threads=cpu_count() if cpu_count()<=4 else int(cpu_count()/2)
+    print("Start gevent WSGI server with "+ str(used_threads)+ " threads")
+    # use gevent WSGI server instead of the Flask
+    http = WSGIServer(('', scriptargs.port), app.wsgi_app, spawn=used_threads)
+    # TODO gracefully handle shutdown
+    http.serve_forever()
