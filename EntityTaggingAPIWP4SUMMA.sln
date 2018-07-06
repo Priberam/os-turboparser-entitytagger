@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "EntityTaggingAPIWP4SUMMA", "EntityTaggingAPIWP4SUMMA.pyproj", "{07ADE3A7-404E-47DF-B446-71C3DF2A3B9E}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "EntityDiscoveryLinkingPythonCli", "EntityDiscoveryLinkingPythonCli.pyproj", "{9EF73144-BB01-4ECD-B746-F3D2B4CF5DB4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{07ADE3A7-404E-47DF-B446-71C3DF2A3B9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07ADE3A7-404E-47DF-B446-71C3DF2A3B9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9EF73144-BB01-4ECD-B746-F3D2B4CF5DB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9EF73144-BB01-4ECD-B746-F3D2B4CF5DB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9BCE740E-E397-4277-81A0-9BE6924C9AD9}
+	EndGlobalSection
+EndGlobal
