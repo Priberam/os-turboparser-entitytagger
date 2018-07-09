@@ -122,7 +122,7 @@ available_modules = []
 modules_per_language={'en':['SmallWiki_EN', 'FullWiki_EN']}
 ner_models_per_module={'SmallWiki_EN':['turboparser'], 'FullWiki_EN':['turboparser']}
 language_of_a_module={'SmallWiki_EN':'en', 'FullWiki_EN':'en'}
-valid_languages_turboparser = ['en','es','de']
+valid_languages_turboparser = ['en']
 
 #load TurboParser
 print('Loading Turbo Parser...')
