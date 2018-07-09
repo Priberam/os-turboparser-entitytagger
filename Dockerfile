@@ -9,7 +9,7 @@ WORKDIR /TurboParser
 RUN sh install_deps.sh
 RUN rm missing
 RUN aclocal
-RUN autoconf
+RUN autoconf -f
 RUN automake --add-missing
 RUN ./configure && make
 WORKDIR /TurboParser/libturboparser
