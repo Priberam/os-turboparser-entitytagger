@@ -40,7 +40,7 @@ default_headers = {"Content-Type": "application/json",
 argparser = argparse.ArgumentParser()
 argparser.add_argument("-ts", "--el_ts", help="Seconds between EL api layer service first call retries", type=int, default = 3)
 argparser.add_argument("-ne", "--el_ns", help="Number of EL api layer service first call retries", type=int, default = 10)
-argparser.add_argument("-u", "--url", help="URL of the other ETL layer", default = "http://localhost:5002/edl_webservice/api/v2.0/")
+argparser.add_argument("-u", "--url", help="URL of the other ETL layer", default = "http://localhost:5000/edl_webservice/api/v2.0/")
 argparser.add_argument("-r", "--route", help="Route for this webservice", default = "/EntityTagging/api")
 argparser.add_argument("-p", "--port", help="Port to listen to future connections", default = 5001)
 argparser.add_argument("-v", "--verbose", help="Verbose Option")
