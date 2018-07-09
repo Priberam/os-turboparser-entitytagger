@@ -20,10 +20,17 @@ cd TurboTextAnalysis/TurboTextAnalysis
 find="/pba/workspace"
 sed -ie "s?${find}?${outer_context}?g" Makefile
 make
+
 cd ..
 cd TurboTextAnalysisPython
 sed -ie "s?${find}?${outer_context}?g" setup.py
 python3 setup.py build_ext --inplace
+
+cd ..
+cd CrossPlatfTurboTextAnalysis
+find="/pba/workspace"
+sed -ie "s?${find}?${outer_context}?g" Makefile
+make
 
 add_to_ld_library_path=":/pba/workspace/TurboParser/deps/local/lib/:/pba/workspace/TurboParser/libturboparser/:/pba/workspace/TurboTextAnalysis/TurboTextAnalysis:/pba/workspace/TurboTextAnalysis/TurboTextAnalysisPython"
 add_to_ld_library_path=${add_to_ld_library_path//$find/$current_path}
