@@ -2,6 +2,9 @@
 apt-get update
 apt-get install -y wget build-essential automake autoconf git unzip libconfig++-dev libicu-dev python3 cython3 python3-flask
 
+current_path="$(pwd)"
+outer_context="../.."
+
 cd TurboParser
 ./install_deps.sh
 rm missing
@@ -14,13 +17,12 @@ make
 cd ../..
 
 cd TurboTextAnalysis/TurboTextAnalysis
-current_path="$(pwd)"
 find="/pba/workspace"
-sed -ie "s?${find}?${current_path}?g" Makefile
+sed -ie "s?${find}?${outer_context}?g" Makefile
 make
 cd ..
 cd TurboTextAnalysisPython
-sed -ie "s?${find}?${current_path}?g" setup.py
+sed -ie "s?${find}?${outer_context}?g" setup.py
 python3 setup.py build_ext --inplace
 
 add_to_ld_library_path=":/pba/workspace/TurboParser/deps/local/lib/:/pba/workspace/TurboParser/libturboparser/:/pba/workspace/TurboTextAnalysis/TurboTextAnalysis:/pba/workspace/TurboTextAnalysis/TurboTextAnalysisPython"
